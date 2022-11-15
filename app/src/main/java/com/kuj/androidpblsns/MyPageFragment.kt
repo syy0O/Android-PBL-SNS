@@ -35,13 +35,14 @@ class MyPageFragment : Fragment() {
             // 로그아웃 후 로그인 화면으로
             auth = Firebase.auth
             auth?.signOut()
-            val intent = Intent(context, MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            startActivity(intent)
             activity?.supportFragmentManager
                 ?.beginTransaction()
                 ?.remove(this)
                 ?.commit()
+            val intent = Intent(context, MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
+
         }
 
         return view

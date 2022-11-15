@@ -7,13 +7,16 @@ import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
+import androidx.core.content.ContextCompat.startActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 //메인 = 로그인 액티비티
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var auth: FirebaseAuth
+    private var auth: FirebaseAuth? = null
     var backKeyPressedTime : Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,7 +24,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         Log.v("Acitivity", "메인액티비티, 로그인")
         supportActionBar?.title = "로그인";
-        auth = FirebaseAuth.getInstance()
+        //auth = FirebaseAuth.getInstance()
+        auth = Firebase.auth
         val signupButton = findViewById<Button>(R.id.signupButton)
         val loginButton = findViewById<Button>(R.id.loginButton)
 
@@ -40,38 +44,38 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-/*    // 로그아웃하지 않을 시 자동 로그인 , 회원가입시 바로 로그인 됨
+   // 로그아웃하지 않을 시 자동 로그인 , 회원가입시 바로 로그인 됨
     public override fun onStart() {
         super.onStart()
-        moveMainPage(auth.currentUser)
-    }*/
+        moveMainPage(auth?.currentUser)
+    }
 
     // 로그인
     private fun signIn(email: String, password: String) {
-            auth.signInWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) {
-                    if (it.isSuccessful) {
-                        Toast.makeText(
-                            this, "로그인에 성공 하였습니다.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                        moveMainPage(auth.currentUser)
-                    } else {
-                        Toast.makeText(
-                            this, "로그인에 실패 하였습니다.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-                    }
+        auth?.signInWithEmailAndPassword(email, password)
+            ?.addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(
+                        this, "로그인에 성공 하였습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    moveMainPage(auth?.currentUser)
+                } else {
+                    Toast.makeText(
+                        this, "로그인에 실패 하였습니다.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+            }
     }
-
 
     // 홈 액티비티 호출
-    private fun moveMainPage(user: FirebaseUser?){
-            startActivity(Intent(this,HomeActivity::class.java))
+    private fun moveMainPage(user: FirebaseUser?) {
+        if (user != null) {
+            startActivity(Intent(this, HomeActivity::class.java))
             finish()
+        }
     }
-
     // 뒤로가기 2번 exit
     override fun onBackPressed() {
         if (System.currentTimeMillis() > backKeyPressedTime + 2500){
