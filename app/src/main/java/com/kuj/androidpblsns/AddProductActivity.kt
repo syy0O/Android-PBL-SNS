@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Window
 import android.widget.Button
 import android.widget.ImageView
@@ -14,16 +15,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.google.android.material.tabs.TabLayout.TabGravity
 import com.google.firebase.storage.FirebaseStorage
 import com.kuj.androidpblsns.databinding.AddProductBinding
+import java.text.SimpleDateFormat
+import java.util.*
 import java.util.jar.Manifest
 
-
 class AddProductActivity : AppCompatActivity() {
+
     var PICK_IMAGE_FROM_ALBUM = 2000
     var storage : FirebaseStorage? = null
     var photoUri : Uri? = null
-    lateinit var binding:AddProductBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
@@ -32,8 +36,8 @@ class AddProductActivity : AppCompatActivity() {
         // initiate storage
         storage = FirebaseStorage.getInstance()
 
+        // 사진 선택 버튼 액션
         findViewById<Button>(R.id.camera_button).setOnClickListener{
-
             when {
                 ContextCompat.checkSelfPermission(this,
                     android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> {
@@ -60,8 +64,15 @@ class AddProductActivity : AppCompatActivity() {
             startActivity(intent)
             //overridePendingTransition(R.anim.none,R.anim.slide_up_exit)
         }
-    }
-    private fun showPermissionContextPopup() {
+
+        findViewById<Button>(R.id.upload_button).setOnClickListener{
+            contentUpload()
+        }
+
+
+    } // end of func OnCreate..
+
+    private fun showPermissionContextPopup() { // 권한 허용 팝업
         AlertDialog.Builder(this)
             .setTitle("권한이 필요합니다")
             .setMessage("전자액자에서 사진을 선택하려면 권한이 필요합니다.")
@@ -71,7 +82,7 @@ class AddProductActivity : AppCompatActivity() {
             .setNegativeButton("취소하기",{ _,_ ->})
             .create()
             .show()
-    }
+    } // end of func showPermissonContextPopup..
 
     override fun onRequestPermissionsResult(
         requestCode: Int,
@@ -90,33 +101,45 @@ class AddProductActivity : AppCompatActivity() {
                     Toast.makeText(this,"권한을 거부했습니다.",Toast.LENGTH_SHORT).show()
                 }
             } else -> {
-            //Do Nothing
+                //Do Nothing
+            }
         }
-        }
-    }
+    }// end of func onRequestPermissionsResult..
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) { // 선택한 이미지를 받는 부분
         super.onActivityResult(requestCode, resultCode, data)
         if(requestCode == PICK_IMAGE_FROM_ALBUM){
-            if(resultCode == Activity.RESULT_OK){
-                photoUri = data?.data
-                findViewById<ImageView>(R.id.addphoto_image).setImageURI(photoUri)
+            if(resultCode == Activity.RESULT_OK){ // 사진을 선택 했을 때 -> 이미지의 경로가 넘어옴
+                photoUri = data?.data // 경로(path)
+                findViewById<ImageView>(R.id.addphoto_image).setImageURI(photoUri) // 이미지 뷰에 선택한 이미지 표시
             }
-            else{
+            else{ // 취소버튼을 눌렀을 때 작동하는 부분
                 finish()
             }
         }
-    }
+    } // end of func onActivityResult..
 
     private fun navigatePhotos() {
         val intent = Intent(Intent.ACTION_GET_CONTENT)
         intent.type = "image/*"
         startActivityForResult(intent,2000)
-    }
+    }//end of func navigatePhotos..
 
-//    private fun getImageFromAlbum() {
-//        val intent = Intent(Intent.ACTION_GET_CONTENT)
-//        intent.type = "image/*"
-//        startActivityForResult(intent,REQUEST_GET_IMAGE)
-//    }
+    private fun contentUpload(){
+
+        Log.d("contentUpload func 들어옴: ", " ")
+        //Make filename
+        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var imageFileName = "IMAGE_"+timestamp+"_.png"
+
+        var storageRef = storage?.reference?.child("images")?.child(imageFileName)
+        Log.d("firebase storage ref: ", " "+storageRef)
+        Log.d("firebase photoUri: ", " "+photoUri!!)
+
+        //FileUpload
+        storageRef?.putFile(photoUri!!)?.addOnSuccessListener {
+            Toast.makeText(this, getString(R.string.upload_success), Toast.LENGTH_LONG).show()
+        }
+
+    }
 }

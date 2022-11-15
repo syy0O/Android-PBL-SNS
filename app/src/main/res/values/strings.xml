@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">상상마켓</string>
+    <string name="upload_success">photo upload success!</string>
 </resources>
