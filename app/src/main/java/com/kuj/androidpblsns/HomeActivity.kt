@@ -18,7 +18,6 @@ class HomeActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
-        supportActionBar?.title = "홈";
 
         val bnv_home = findViewById<BottomNavigationView>(R.id.bnv)
 
