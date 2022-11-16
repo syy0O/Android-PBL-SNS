@@ -20,8 +20,6 @@ class SignUpActivity : AppCompatActivity(){
         auth = Firebase.auth
         setContentView(R.layout.activity_signup)
 
-        supportActionBar?.title = "회원가입"
-
         val signup_okButton = findViewById<Button>(R.id.signup_okButton)
         val signupID = findViewById<EditText>(R.id.signupID)
         val signupPassword = findViewById<EditText>(R.id.signupPassword)

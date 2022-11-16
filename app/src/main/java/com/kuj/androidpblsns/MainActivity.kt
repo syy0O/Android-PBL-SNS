@@ -23,7 +23,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         Log.v("Acitivity", "메인액티비티, 로그인")
-        supportActionBar?.title = "로그인";
         //auth = FirebaseAuth.getInstance()
         auth = Firebase.auth
         val signupButton = findViewById<Button>(R.id.signupButton)
