@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'kotlin-android-extensions'
 }
 
 android {
@@ -35,10 +36,10 @@ android {
 
     buildFeatures {
         viewBinding= true
-
-    }
-    buildFeatures {
         dataBinding true
+    }
+    dataBinding {
+        enabled = true
     }
 }
 
@@ -71,4 +72,9 @@ dependencies {
 
     implementation 'com.google.android.material:material:1.1.0-beta01'
     implementation 'com.google.firebase:firebase-storage-ktx:20.1.0'
+
+    implementation "androidx.activity:activity-ktx:1.5.0"
+    implementation "androidx.fragment:fragment-ktx:1.5.0"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.5.1"
 }
