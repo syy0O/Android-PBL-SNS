@@ -28,7 +28,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="191dp">
+        android:layout_height="240dp">
 
         <ImageView
             android:id="@+id/editPhoto"
@@ -38,15 +38,16 @@
             android:translationY="30dp"
             tools:srcCompat="@tools:sample/avatars" />
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="191dp"
+        android:layout_height="300dp"
         android:orientation="vertical">
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="104dp"
             android:text="닉네임 변경"
             android:textAlignment="center"
             android:textAppearance="@style/TextAppearance.AppCompat.Large" />
@@ -54,7 +55,10 @@
         <EditText
             android:id="@+id/editNickName"
             android:layout_width="match_parent"
-            android:layout_height="95dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginRight="70dp"
+            android:background="@drawable/idpw_box_border"
             android:ems="10"
             android:hint="변경할 닉네임을 적어주세요"
             android:inputType="textPersonName" />
@@ -62,8 +66,13 @@
         <Button
             android:id="@+id/editNickNameBtn"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="변경하기" />
+            android:layout_height="40dp"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="50dp"
+            android:layout_marginRight="70dp"
+            android:background="@drawable/radius"
+            android:text="변경하기"
+            tools:ignore="TouchTargetSizeCheck" />
 
     </LinearLayout>
 

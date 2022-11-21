@@ -38,14 +38,15 @@
 
     <Button
         android:id="@+id/signup_okButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="240dp"
+        android:layout_height="40dp"
         android:layout_marginTop="32dp"
-        android:text="가입하기"
         android:background="@drawable/radius"
+        android:text="가입하기"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/signupPassword" />
+        app:layout_constraintTop_toBottomOf="@+id/signupPassword"
+        tools:ignore="TouchTargetSizeCheck" />
 
     <ImageView
         android:id="@+id/imageView2"
