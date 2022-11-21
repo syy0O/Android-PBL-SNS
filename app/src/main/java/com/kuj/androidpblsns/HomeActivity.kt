@@ -9,21 +9,16 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.kuj.androidpblsns.chat.ChatFragment
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.kuj.androidpblsns.R
 import com.kuj.androidpblsns.home.ArticleModel
 import com.kuj.androidpblsns.databinding.ActivityHomeBinding
+import com.kuj.androidpblsns.follwer.FollowerFragment
 
-import com.kuj.androidpblsns.FollowerFragment
-import com.kuj.androidpblsns.HomeFragment
-import com.kuj.androidpblsns.MyPageFragment
+import com.kuj.androidpblsns.my_page.MyPageFragment
 import com.kuj.androidpblsns.home.ArticleViewModel
 
 // 홈 액티비티

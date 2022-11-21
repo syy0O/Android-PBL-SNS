@@ -1,23 +1,158 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MyPageFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    xmlns:tool="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="MyPageFragment"
-        android:textSize= "50dp"/>
+        android:layout_height="121dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:translationY="10dp">
 
-    <Button
-        android:id="@+id/logoutButton"
+        <ImageView
+            android:id="@+id/profile_photo"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_alignParentLeft="true"
+            android:contentDescription="profile"
+            android:translationY="5dp"
+            tools:src="@drawable/ic_account" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_toRightOf="@id/profile_photo"
+            android:baselineAligned="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/userID"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:text="user"
+                    android:textSize="34sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/userEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="email"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="50dp"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:id="@+id/profileEditBtn"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="#FFFFFF"
+                    tool:icon="@drawable/ic_profile_edit_24"
+                    tool:iconTint="#000000"
+                    tools:ignore="SpeakableTextPresentCheck" />
+            </LinearLayout>
+
+
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/toolbar_division"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="로그아웃"
-        android:translationY="600dp" />
+        android:layout_height="1dp"
+        android:background="#9EA1A3"
+        android:orientation="vertical"
+        android:translationY="30dp" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/followCheckBtn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_marginHorizontal="12dp"
+            android:backgroundTint="#FFFFFF"
+            android:text="         내 팔로우"
+            android:textAlignment="textStart"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#000000"
+            android:translationY="70dp"
+            tool:icon="@drawable/ic_baseline_people_alt_24"
+            tool:iconTint="#000000" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/myProductBtn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:backgroundTint="#FFFFFF"
+            android:layout_marginHorizontal="12dp"
+            android:text="          내 판매 글 확인"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#000000"
+            android:translationY="70dp"
+            tool:icon="@drawable/ic_baseline_shopping_bag_24"
+            tool:iconTint="#000000" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/logoutBtn"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:backgroundTint="#FFFFFF"
+            android:text="          로그아웃"
+            android:layout_marginHorizontal="12dp"
+            android:textAlignment="viewStart"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            android:textColor="#000000"
+            android:translationY="70dp"
+            tool:icon="@drawable/ic_baseline_logout_24"
+            tool:iconTint="#000000" />
+
+
+    </LinearLayout>
+
+</LinearLayout>
