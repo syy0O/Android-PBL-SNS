@@ -27,8 +27,8 @@
 
         <activity android:name=".HomeActivity"/>
         <activity android:name=".SignUpActivity"/>
-
-        <activity android:name=".AddProductActivity"/>
+        <activity android:name=".chat.ChatActivity"/>
+        <activity android:name=".product.AddProductActivity"/>
 
     </application>
 

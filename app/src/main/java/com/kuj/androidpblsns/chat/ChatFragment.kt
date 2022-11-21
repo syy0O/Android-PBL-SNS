@@ -1,11 +1,17 @@
-package com.kuj.androidpblsns
+package com.kuj.androidpblsns.chat
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.kuj.androidpblsns.R
+import com.kuj.androidpblsns.databinding.FragmentChatBinding
+import com.kuj.androidpblsns.databinding.FragmentHomeBinding
+import com.kuj.androidpblsns.product.AddProductActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -21,6 +27,7 @@ class ChatFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    lateinit var binding: FragmentChatBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +42,8 @@ class ChatFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_chat, container, false)
+        binding = FragmentChatBinding.inflate(inflater,container,false)
+        return binding.root
     }
 
     companion object {
@@ -56,5 +64,15 @@ class ChatFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.chatBtn.setOnClickListener{
+            val intent = Intent(getActivity(), ChatActivity::class.java);
+            intent.putExtra("sellerId","SJfYEZNOjZN4XJxksbZ390CkdX13"); // 테스트 용으로 박아놓은 것
+            startActivity(intent);
+            activity?.overridePendingTransition(R.anim.slide_up_enter,R.anim.none)
+        }
     }
 }

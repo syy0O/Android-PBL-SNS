@@ -1,43 +1,49 @@
-package com.kuj.androidpblsns
-
+package com.kuj.androidpblsns.product
 
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Window
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.google.android.material.tabs.TabLayout.TabGravity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
-import com.kuj.androidpblsns.databinding.AddProductBinding
+import com.kuj.androidpblsns.HomeActivity
+import com.kuj.androidpblsns.R
+import com.kuj.androidpblsns.home.ArticleModel
 import java.text.SimpleDateFormat
+import com.kuj.androidpblsns.databinding.ActivityProductAddBinding
 import java.util.*
-import java.util.jar.Manifest
 
 class AddProductActivity : AppCompatActivity() {
 
-    var PICK_IMAGE_FROM_ALBUM = 2000
-    var storage : FirebaseStorage? = null
+    companion object {
+        private const val PICK_IMAGE_FROM_ALBUM = 2000
+    }
+
+    private val binding by lazy { ActivityProductAddBinding.inflate(layoutInflater) }
+    private val storage : FirebaseStorage by lazy { FirebaseStorage.getInstance() }
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
+    private val database = Firebase.database
+    private val articleRef = database.getReference("articles")
     var photoUri : Uri? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        supportActionBar?.hide()
-        setContentView(R.layout.add_product)
-
-        // initiate storage
-        storage = FirebaseStorage.getInstance()
+        setContentView(binding.root)
 
         // 사진 선택 버튼 액션
-        findViewById<Button>(R.id.camera_button).setOnClickListener{
+        binding.cameraButton.setOnClickListener{
             when {
                 ContextCompat.checkSelfPermission(this,
                     android.Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED -> {
@@ -58,18 +64,16 @@ class AddProductActivity : AppCompatActivity() {
             }
         }
 
-        findViewById<Button>(R.id.cancle_button).setOnClickListener{
+        binding.cancleButton.setOnClickListener{
             val intent = Intent(this, HomeActivity::class.java);
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             //overridePendingTransition(R.anim.none,R.anim.slide_up_exit)
         }
 
-        findViewById<Button>(R.id.upload_button).setOnClickListener{
+        binding.uploadButton.setOnClickListener{
             contentUpload()
         }
-
-
     } // end of func OnCreate..
 
     private fun showPermissionContextPopup() { // 권한 허용 팝업
@@ -98,11 +102,11 @@ class AddProductActivity : AppCompatActivity() {
                     navigatePhotos()
                 } else {
                     // 거부 클릭시
-                    Toast.makeText(this,"권한을 거부했습니다.",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"권한을 거부했습니다.", Toast.LENGTH_SHORT).show()
                 }
             } else -> {
-                //Do Nothing
-            }
+            //Do Nothing
+        }
         }
     }// end of func onRequestPermissionsResult..
 
@@ -125,6 +129,7 @@ class AddProductActivity : AppCompatActivity() {
         startActivityForResult(intent,2000)
     }//end of func navigatePhotos..
 
+
     private fun contentUpload(){
 
         Log.d("contentUpload func 들어옴: ", " ")
@@ -132,14 +137,30 @@ class AddProductActivity : AppCompatActivity() {
         var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         var imageFileName = "IMAGE_"+timestamp+"_.png"
 
-        var storageRef = storage?.reference?.child("images")?.child(imageFileName)
+        var storageRef = storage.reference.child("images").child(imageFileName)
         Log.d("firebase storage ref: ", " "+storageRef)
         Log.d("firebase photoUri: ", " "+photoUri!!)
 
         //FileUpload
-        storageRef?.putFile(photoUri!!)?.addOnSuccessListener {
-            Toast.makeText(this, getString(R.string.upload_success), Toast.LENGTH_LONG).show()
+        storageRef.putFile(photoUri!!).addOnSuccessListener {
+            storageRef.downloadUrl.addOnSuccessListener { url ->
+                // article 생성
+                var article = ArticleModel()
+                article.imageUrl = url.toString() //Insert DownloadUrl of image
+                article.sellerId = auth.currentUser?.uid?: "annonymous"
+                article.title = binding.titleEditText.text.toString()
+                article.content = binding.contentEditText.text.toString()
+                article.price = binding.priceEditText.text.toString()
+                article.createAt = System.currentTimeMillis()
+                // database에 article push
+                val articleRef = articleRef.push()
+                articleRef.setValue(article)
+                Toast.makeText(
+                    this, "게시글 업로드 완료",
+                    Toast.LENGTH_SHORT
+                ).show()
+                finish()
+            }
         }
-
     }
 }
