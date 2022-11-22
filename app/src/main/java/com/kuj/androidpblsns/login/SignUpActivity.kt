@@ -2,6 +2,7 @@ package com.kuj.androidpblsns.login
 
 import android.os.Bundle
 import android.text.TextUtils
+import android.util.Log
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Toast
@@ -13,6 +14,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.kuj.androidpblsns.R
 import com.kuj.androidpblsns.databinding.ActivitySignupBinding
+import kotlinx.android.synthetic.main.activity_signup.*
 
 class SignUpActivity : AppCompatActivity(){
 
@@ -50,12 +52,21 @@ class SignUpActivity : AppCompatActivity(){
     // 회원가입 기능
     private fun createAccount(email: String, password: String, nickname: String) {
 
+        val checkPassword = binding.CheckPassword.text.toString()
+
         if(!isValidEmail(email)){ // 이메일이 유효하지 않다
             Toast.makeText(this, "유효하지 않은 이메일 형식입니다.", Toast.LENGTH_SHORT).show()
             return
         }
         if (!isValidPasswd(password)){ // 비밀번호가 6자리 미만이다
             Toast.makeText(this, "비밀번호는 6자리 이상으로 만들어주세요", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if(signupPassword.text.toString() != checkPassword){
+            Log.v("check", signupPassword.text.toString())
+            Log.v("check", checkPassword)
+            Toast.makeText(this, "비밀번호가 다릅니다", Toast.LENGTH_SHORT).show()
             return
         }
 

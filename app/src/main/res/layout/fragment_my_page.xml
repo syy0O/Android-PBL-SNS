@@ -10,7 +10,6 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="121dp"
-        android:layout_marginTop="8dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="8dp"
         android:gravity="center"
@@ -19,9 +18,11 @@
 
         <ImageView
             android:id="@+id/profile_photo"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_alignParentLeft="true"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
             android:contentDescription="profile"
             android:translationY="5dp"
             tools:src="@drawable/ic_account" />
@@ -31,7 +32,6 @@
             android:layout_height="match_parent"
             android:layout_marginStart="8dp"
             android:layout_marginLeft="8dp"
-            android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_toRightOf="@id/profile_photo"
             android:baselineAligned="true"
@@ -40,7 +40,7 @@
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="wrap_content"
+                android:layout_height="100dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:orientation="vertical">
@@ -49,7 +49,8 @@
                     android:id="@+id/userID"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="3dp"
                     android:text="user"
                     android:textSize="26sp"
                     android:textStyle="bold" />
@@ -58,10 +59,13 @@
                     android:id="@+id/userEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
                     android:text="email"
                     android:textSize="15sp"
                     android:textStyle="bold" />
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="50dp"
                 android:layout_height="wrap_content">
@@ -78,7 +82,6 @@
             </LinearLayout>
 
 
-
         </LinearLayout>
     </RelativeLayout>
 
@@ -87,8 +90,7 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:background="#9EA1A3"
-        android:orientation="vertical"
-        android:translationY="30dp" />
+        android:orientation="vertical" />
 
     <LinearLayout
         android:layout_width="match_parent"
