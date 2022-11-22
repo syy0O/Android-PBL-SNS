@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.kuj.androidpblsns.HomeActivity
 import com.kuj.androidpblsns.R
 import com.kuj.androidpblsns.home.ArticleModel
@@ -29,6 +30,11 @@ class ArticleAdapter(private val context: Context) :
             binding.titleTextView.text = articleModel.title
             binding.dateTextView.text = format.format(date).toString()
             binding.priceTextView.text = articleModel.price
+            if (articleModel.imageUrl.isNotEmpty()) {
+                Glide.with(binding.thumbnailImageView)
+                    .load(articleModel.imageUrl)
+                    .into(binding.thumbnailImageView)
+            }
 
             binding.root.setOnClickListener {
                 (context as HomeActivity).supportFragmentManager.beginTransaction()
