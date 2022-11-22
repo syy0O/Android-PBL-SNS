@@ -19,8 +19,13 @@ import com.kuj.androidpblsns.home.ArticleViewModel
 import com.kuj.androidpblsns.home.ArticleModel
 import com.kuj.androidpblsns.product.AddProductActivity
 
-class HomeFragment : Fragment() {
 
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+private const val ARG_PARAM1 = "param1"
+private const val ARG_PARAM2 = "param2"
+
+class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
 
     /** [ArticleViewModel]가 Activity 에서 생성되었기에 데이터가 남아있음 */
