@@ -19,7 +19,6 @@ import com.kuj.androidpblsns.product.AddProductActivity
 class ChatFragment : Fragment() {
 
     private val binding by lazy { FragmentChatBinding.inflate(layoutInflater)}
-    private val chatlistbinding by lazy{ ChatlistBinding.inflate(layoutInflater)}
     lateinit var ChatListAdapter : ChatListAdapter
     val datas = mutableListOf<ChatData>()
 

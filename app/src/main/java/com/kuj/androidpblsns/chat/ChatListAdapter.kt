@@ -32,8 +32,8 @@ class ChatListAdapter(private val context: Context):
         // 채팅방 목록에서 각 뷰 누르면 채팅 액티비티로
         holder.itemView.setOnClickListener{
                 //Log.v("btnCheck", "버튼 눌림")
-                val intent = Intent(holder.itemView.context, ChatActivity::class.java);
-                intent.putExtra("sellerId","SJfYEZNOjZN4XJxksbZ390CkdX13"); // 테스트 용으로 박아놓은 것
+                val intent = Intent(holder.itemView.context, ChatActivity::class.java)
+                intent.putExtra("sellerId","SJfYEZNOjZN4XJxksbZ390CkdX13") // 테스트 용으로 박아놓은 것
                 startActivity(holder.itemView.context, intent, null)
                 //activity?.overridePendingTransition(R.anim.slide_up_enter,R.anim.none)
         }
