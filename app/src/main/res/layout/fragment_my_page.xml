@@ -45,7 +45,6 @@
             android:layout_height="80dp"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="14dp"
-            android:layout_marginTop="10dp"
             android:contentDescription="profile"
             android:translationY="5dp"
             tool:srcCompat="@drawable/photoellipse" />
@@ -75,7 +74,7 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="3dp"
                     android:text="user"
-                    android:textSize="16dp"
+                    android:textSize="20dp"
                     android:textStyle="bold" />
 
                 <TextView
@@ -85,8 +84,8 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginBottom="10dp"
                     android:text="email"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="14sp"
+                    android:textStyle="normal" />
             </LinearLayout>
 
             <LinearLayout
@@ -99,6 +98,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:backgroundTint="#FFFFFF"
+                    android:background="#00ff0000"
                     tool:icon="@drawable/ic_profile_edit_24"
                     tool:iconTint="#000000"
                     tools:ignore="SpeakableTextPresentCheck" />
@@ -112,7 +112,7 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             tool:srcCompat="@drawable/defaultprofile" />
     </RelativeLayout>
 
