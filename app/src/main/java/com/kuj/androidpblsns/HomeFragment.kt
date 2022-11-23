@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
+import com.kuj.androidpblsns.alarm.AlarmListActivity
 import com.kuj.androidpblsns.databinding.FragmentHomeBinding
 import com.kuj.androidpblsns.home.ArticleAdapter
 import com.kuj.androidpblsns.home.ArticleViewModel
@@ -22,8 +23,6 @@ import com.kuj.androidpblsns.product.AddProductActivity
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class HomeFragment : Fragment() {
     lateinit var binding: FragmentHomeBinding
@@ -50,6 +49,11 @@ class HomeFragment : Fragment() {
 
         viewModel.articleLiveData.observe(viewLifecycleOwner) {
             articleAdapter.submitList(it)
+        }
+
+        binding.alarmbtn.setOnClickListener {
+            val intent = Intent(requireContext(), AlarmListActivity::class.java);
+            startActivity(intent)
         }
 
         binding.floatingActionButton.setOnClickListener {
