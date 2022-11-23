@@ -73,8 +73,8 @@ class ChatActivity : AppCompatActivity() {
             chatRef.child(senderRoom).child("messages").push()
                 .setValue(messageObject).addOnSuccessListener {
                     //저장 성공하면
-                    chatRef.child(receiverRoom).child("messages").push()
-                        .setValue(messageObject)
+//                    chatRef.child(receiverRoom).child("messages").push()
+//                        .setValue(messageObject)
                 }
             // 메시지 입력창 초기화
             binding.messageEdit.setText("")
