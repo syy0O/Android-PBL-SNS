@@ -34,4 +34,5 @@ class AlarmListActivity : AppCompatActivity() {
         alarmListAdapter.notifyDataSetChanged()
 
     }
+
 }

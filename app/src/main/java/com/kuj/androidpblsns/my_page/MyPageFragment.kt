@@ -15,6 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import com.kuj.androidpblsns.R
+import com.kuj.androidpblsns.alarm.AlarmDTO
 import com.kuj.androidpblsns.databinding.FragmentMyPageBinding
 import com.kuj.androidpblsns.login.MainActivity
 
@@ -104,4 +105,5 @@ class MyPageFragment : Fragment() {
             startActivity(intent)
         }
     }
+
 }
