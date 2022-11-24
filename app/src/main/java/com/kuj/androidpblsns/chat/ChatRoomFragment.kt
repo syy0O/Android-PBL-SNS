@@ -1,6 +1,9 @@
 package com.kuj.androidpblsns.chat
 
 import android.os.Bundle
+
+import android.util.Log
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,6 +29,9 @@ class ChatRoomFragment : Fragment() {
 
         arguments?.let {
             receiverUid = it.getString(RECEIVER_UID)
+
+            Log.d("recieverUId 는 이겆다!! : ",receiverUid+"")
+
         }
 
         receiverUid?.let {
@@ -63,6 +69,8 @@ class ChatRoomFragment : Fragment() {
         //메시지 전송버튼 이벤트
         binding.sendBtn.setOnClickListener{
             val message = binding.messageEdit.text.toString()
+
+            viewModel.sendMessageData(message) // 요게 빠져있었다.
 
             viewModel.messageSendSuccess.observe(viewLifecycleOwner) { isSuccess ->
                 if (isSuccess) {

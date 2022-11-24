@@ -17,7 +17,11 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.kuj.androidpblsns.HomeActivity
 import com.kuj.androidpblsns.chat.ChatRoomFragment
+//<<<<<<< Updated upstream
 import com.kuj.androidpblsns.databinding.FragmentProductDetailBinding
+//=======
+//import com.kuj.androidpblsns.databinding.FragmentProductDeatilReBinding
+//>>>>>>> Stashed changes
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -37,7 +41,11 @@ class ProductDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
+//<<<<<<< Updated upstream
         binding = FragmentProductDetailBinding.inflate(inflater, container, false)
+//=======
+//        binding = FragmentProductDeatilReBinding.inflate(inflater, container, false)
+//>>>>>>> Stashed changes
 
         arguments?.let {
             position = it.getInt(POSITION)
@@ -58,11 +66,14 @@ class ProductDetailFragment : Fragment() {
         val date = Date(data.createAt)
 
         queryItem(data.sellerId)
+        isRecentFollowing(firebaseAuth.currentUser?.uid!!,data.sellerId,false)
+
 
         binding.apply {
             deatilviewitemPrice.text = data.price
             detailviewitemTitle.text = data.title
             detailviewitemCreateAt.text = format.format(date).toString()
+            detailviewitemContent.text = data.content
         }
 
         if (data.imageUrl.isNotEmpty()) {
@@ -74,7 +85,56 @@ class ProductDetailFragment : Fragment() {
         binding.chatBtn.setOnClickListener{
             (activity as HomeActivity).changeFragmentWithBackStack(ChatRoomFragment.newInstance(data.sellerId)) // 테스트 용 sellerId 박아놓은 것
         }
+
+        binding.followBtn.setOnClickListener{
+            //팔로우 눌렀을 때
+            isRecentFollowing(firebaseAuth.currentUser?.uid!!,data.sellerId,true)
+        }
     }
+
+    private fun isRecentFollowing(userId:String, followingId:String, isBtnClicked:Boolean){
+            userRef.child(userId).child("following").addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onCancelled(error: DatabaseError) {
+                }
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    val following = dataSnapshot.value as HashMap<String, Boolean>
+
+                    if (isBtnClicked == false){
+
+                        if(following.containsKey(followingId)){
+                            var currentValue = following.getValue(followingId)
+                            if (currentValue == true){
+                                binding.followBtn.text = "팔로우중"
+                            }
+                            else {
+                                binding.followBtn.text = "팔로우"
+                            }
+                        }
+                        else {
+                            binding.followBtn.text = "팔로우"
+                        }
+                    }
+                    else {
+                        if(following.containsKey(followingId)){
+                            var currentValue = following.getValue(followingId)
+                            if (currentValue == true){
+                                userRef.child(userId).child("following").child(followingId).setValue(false)
+                                binding.followBtn.text = "팔로우"
+                            }
+                            else {
+                                userRef.child(userId).child("following").child(followingId).setValue(true)
+                                binding.followBtn.text = "팔로우중"
+                            }
+                        }
+                        else {
+                            userRef.child(userId).child("following").child(followingId)
+                                .setValue(true)
+                            binding.followBtn.text = "팔로우중"
+                        }
+                    }
+                }
+            })
+        }
 
     private fun queryItem(userID: String) {
         userRef.child(userID).addListenerForSingleValueEvent(object : ValueEventListener {

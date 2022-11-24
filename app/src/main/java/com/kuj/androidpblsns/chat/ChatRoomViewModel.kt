@@ -1,5 +1,6 @@
 package com.kuj.androidpblsns.chat
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -89,6 +90,9 @@ class ChatRoomViewModel : ViewModel(){
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val map = dataSnapshot.value as Map<*, *>
                 _chatReceiverTextLiveData.value = map["nickname"].toString()
+
+                Log.d("아니 했는데..",_chatReceiverTextLiveData.value+"")
+
             }
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
