@@ -26,7 +26,7 @@ import com.kuj.androidpblsns.home.ArticleViewModel
 class HomeActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
-   // private lateinit var database: DatabaseReference
+    // private lateinit var database: DatabaseReference
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     //private val userRef =  Firebase.database.getReference("Articles")
     /** 이 객체가 초기화될 때 [ArticleViewModel]에서 init 발생 */
@@ -81,5 +81,18 @@ class HomeActivity : AppCompatActivity() {
             .commit()
     }
 
+    fun changeFragmentWithBackStack(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.framelayout, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
 
+    fun removeFragment(fragment: Fragment) {
+        supportFragmentManager
+            .beginTransaction()
+            .remove(fragment)
+            .commit()
+    }
 }

@@ -8,11 +8,9 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.kuj.androidpblsns.R
-import com.kuj.androidpblsns.data.Message
-import org.w3c.dom.Text
 
-class MessageAdapter(private val context: Context, private val messageList:ArrayList<Message>):
-RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+class MessageAdapter(private val context: Context, private val viewModel: ChatRoomViewModel):
+    RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
     // 메시지 타입(수신,송신)에 따라 ViewHolder 다르게 설정
     private val receive = 1 // 받는 타입
@@ -32,7 +30,7 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     // view와 데이터 연결
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         //현재 메시지
-        val currentMessage = messageList[position]
+        val currentMessage = viewModel.messageListLiveData.value!![position]
 
         //보내는 데이터
         if(holder.javaClass == SendViewHolder::class.java) {
@@ -46,19 +44,18 @@ RecyclerView.Adapter<RecyclerView.ViewHolder>(){
     }
 
     override fun getItemCount(): Int {
-      return messageList.size
+        return viewModel.messageListLiveData.value?.size ?: 0
     }
 
     override fun getItemViewType(position: Int): Int {
         //메시지 값
-        val currentMessage = messageList[position]
+        val currentMessage = viewModel.messageListLiveData.value!![position]
         return if(FirebaseAuth.getInstance().currentUser?.uid.equals(currentMessage.sendId)){
             send
         }else {
             receive
         }
     }
-
 
     //보낸 쪽
     class SendViewHolder(itemView: View):RecyclerView.ViewHolder(itemView){ // 보낸 쪽 View를 전달 받아 객체 생성
