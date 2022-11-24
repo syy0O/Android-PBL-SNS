@@ -1,1 +1,0 @@
-import com.kuj.androidpblsns.databinding.FragmentProductDetailBinding
