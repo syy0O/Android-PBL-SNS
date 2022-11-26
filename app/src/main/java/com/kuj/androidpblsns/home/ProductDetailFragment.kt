@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -34,7 +35,7 @@ class ProductDetailFragment : Fragment() {
     private lateinit var binding: FragmentProductDetailBinding
 
     /** [ArticleViewModel]가 Activity 에서 생성되었기에 데이터가 남아있음 */
-    private val viewModel by activityViewModels<ArticleViewModel>()
+    private val viewModel by activityViewModels<FollowerArticleViewModel>()//activityViewModels<ArticleViewModel>()
     private val firebaseAuth:FirebaseAuth by lazy{Firebase.auth}
     private val userRef =  Firebase.database.getReference("user")
 
@@ -44,11 +45,8 @@ class ProductDetailFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-//<<<<<<< Updated upstream
+
         binding = FragmentProductDetailBinding.inflate(inflater, container, false)
-//=======
-//        binding = FragmentProductDeatilReBinding.inflate(inflater, container, false)
-//>>>>>>> Stashed changes
 
         arguments?.let {
             position = it.getInt(POSITION)

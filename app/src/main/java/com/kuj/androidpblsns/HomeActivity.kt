@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -24,6 +25,9 @@ import com.kuj.androidpblsns.follwer.FollowerFragment
 import com.kuj.androidpblsns.my_page.MyPageFragment
 import com.kuj.androidpblsns.home.ArticleViewModel
 import com.kuj.androidpblsns.home.HomeFragment
+import com.kuj.androidpblsns.home.FollowerArticleViewModel
+import com.kuj.androidpblsns.login.UserData
+
 
 // 홈 액티비티
 class HomeActivity : AppCompatActivity() {
@@ -34,6 +38,7 @@ class HomeActivity : AppCompatActivity() {
     //private val userRef =  Firebase.database.getReference("Articles")
     /** 이 객체가 초기화될 때 [ArticleViewModel]에서 init 발생 */
     private val viewModel by viewModels<ArticleViewModel>()
+    private val followerViewModel by viewModels<FollowerArticleViewModel>()
 
     //for message
     private lateinit var dbRef: DatabaseReference
