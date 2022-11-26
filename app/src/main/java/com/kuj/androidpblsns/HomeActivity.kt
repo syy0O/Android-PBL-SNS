@@ -33,7 +33,7 @@ import com.kuj.androidpblsns.login.UserData
 class HomeActivity : AppCompatActivity() {
 
     private val binding by lazy { ActivityHomeBinding.inflate(layoutInflater) }
-    // private lateinit var database: DatabaseReference
+    private val database = Firebase.database.reference
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
     //private val userRef =  Firebase.database.getReference("Articles")
     /** 이 객체가 초기화될 때 [ArticleViewModel]에서 init 발생 */

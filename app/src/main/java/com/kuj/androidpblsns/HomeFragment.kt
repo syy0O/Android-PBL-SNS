@@ -19,6 +19,7 @@ import com.kuj.androidpblsns.home.ArticleAdapter
 import com.kuj.androidpblsns.home.ArticleViewModel
 import com.kuj.androidpblsns.home.ArticleModel
 import com.kuj.androidpblsns.product.AddProductActivity
+import com.kuj.androidpblsns.search.SearchListActivity
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -53,6 +54,10 @@ class HomeFragment : Fragment() {
 
         binding.alarmbtn.setOnClickListener {
             val intent = Intent(requireContext(), AlarmListActivity::class.java);
+            startActivity(intent)
+        }
+        binding.searchbtn.setOnClickListener {
+            val intent = Intent(requireContext(), SearchListActivity::class.java);
             startActivity(intent)
         }
 
