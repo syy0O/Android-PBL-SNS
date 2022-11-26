@@ -16,14 +16,13 @@ import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.kuj.androidpblsns.HomeActivity
 import com.kuj.androidpblsns.chat.ChatRoomFragment
 import com.kuj.androidpblsns.databinding.FragmentProductDetailBinding
+import com.kuj.androidpblsns.push.FcmPush
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -35,9 +34,12 @@ class ProductDetailFragment : Fragment() {
     private lateinit var binding: FragmentProductDetailBinding
 
     /** [ArticleViewModel]가 Activity 에서 생성되었기에 데이터가 남아있음 */
-    private val viewModel by activityViewModels<FollowerArticleViewModel>()//activityViewModels<ArticleViewModel>()
+    private val viewModel by activityViewModels<ArticleViewModel>()//activityViewModels<ArticleViewModel>(), activityViewModels<FollowerArticleViewModel>()
     private val firebaseAuth:FirebaseAuth by lazy{Firebase.auth}
     private val userRef =  Firebase.database.getReference("user")
+
+    val database =  FirebaseDatabase.getInstance().reference
+    val nameRef = database.child("user")
 
     private var position: Int = 0
 
@@ -132,12 +134,28 @@ class ProductDetailFragment : Fragment() {
                                 //removeFollower.removeValue()
                                 Log.v("##123##", removeFollower.toString())
                             }
-                            else {
+                            else { // 팔로우했을때
                                 userRef.child(userId).child("following").child(followingId).setValue(true)
                                 binding.followBtn.text = "팔로우중"
                                 Log.v("####", followingId)
                                 //팔로우 했으면 상대방 follower에 내 UID 저장
                                 userRef.child(followingId).child("follower").setValue(userId)
+
+                                //팔로우한사람 nickname DB에서 가져오기
+                                val nickname = nameRef.child(userId).child("nickname")
+                                nickname.addValueEventListener(object : ValueEventListener {
+                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
+                                        val followername = dataSnapshot.getValue(String::class.java)
+                                        // 팔로우 푸시알람 보내기
+                                        FcmPush.instance.sendMessage(followingId, "팔로우 알림", followername + "님이 회원님을 팔로우합니다")
+                                    }
+
+                                    override fun onCancelled(databaseError: DatabaseError) {}
+                                })
+
+
+
+
                             }
                         }
                         else {

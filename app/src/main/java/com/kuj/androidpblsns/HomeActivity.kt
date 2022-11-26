@@ -15,9 +15,11 @@ import com.kuj.androidpblsns.chat.ChatFragment
 
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirestoreRegistrar
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
+import com.google.firebase.messaging.FirebaseMessagingService
 import com.kuj.androidpblsns.home.ArticleModel
 import com.kuj.androidpblsns.databinding.ActivityHomeBinding
 import com.kuj.androidpblsns.follwer.FollowerFragment
@@ -27,6 +29,7 @@ import com.kuj.androidpblsns.home.ArticleViewModel
 import com.kuj.androidpblsns.home.HomeFragment
 import com.kuj.androidpblsns.home.FollowerArticleViewModel
 import com.kuj.androidpblsns.login.UserData
+import com.kuj.androidpblsns.push.FcmPush
 
 
 // 홈 액티비티
@@ -39,6 +42,8 @@ class HomeActivity : AppCompatActivity() {
     /** 이 객체가 초기화될 때 [ArticleViewModel]에서 init 발생 */
     private val viewModel by viewModels<ArticleViewModel>()
     private val followerViewModel by viewModels<FollowerArticleViewModel>()
+
+    private val uid = auth.currentUser!!.uid
 
     //for message
     private lateinit var dbRef: DatabaseReference
@@ -70,12 +75,16 @@ class HomeActivity : AppCompatActivity() {
         dbRef = Firebase.database.reference
         articleDB.addChildEventListener(listener)
 
-        getFCMToken()
+
+        //Log.v("#############check", "start") // 정상작동
+
+        //getFCMToken()
+        registerPushToken()
         initBtmNavi()
     }
 
     // 앱 실행시 토큰 할당. 팔로우 할 경우 Notification을 전송하기 위함
-    private fun getFCMToken() : String? {
+    /*private fun getFCMToken() : String? {
         var token : String? = null
         val uid = firebaseAuth.currentUser?.uid!!
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener {
@@ -89,6 +98,18 @@ class HomeActivity : AppCompatActivity() {
 
         })
         return token
+    }*/
+
+    private fun registerPushToken(){
+        FirebaseMessaging.getInstance().token.addOnCompleteListener{
+            task ->
+            val token = task.result
+            val uid = FirebaseAuth.getInstance().currentUser?.uid
+            val map = mutableMapOf<String, Any>()
+            map["pushToken"] = token!!
+
+            FirebaseFirestore.getInstance().collection("pushtokens").document(uid!!).set(map)
+        }
     }
 
     private fun initBtmNavi() {

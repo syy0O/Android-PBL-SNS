@@ -13,6 +13,7 @@ import com.google.firebase.ktx.Firebase
 import com.kuj.androidpblsns.HomeActivity
 import com.kuj.androidpblsns.R
 import com.kuj.androidpblsns.databinding.ActivityMainBinding
+import com.kuj.androidpblsns.push.FcmPush
 
 //메인 = 로그인 액티비티
 class MainActivity : AppCompatActivity() {
