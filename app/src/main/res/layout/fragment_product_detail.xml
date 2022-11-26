@@ -17,7 +17,11 @@
             android:src="@drawable/loginimg"
             />
     </LinearLayout>
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EBEBEB"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
@@ -51,11 +55,16 @@
             android:text="팔로우" />
     </LinearLayout>
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EBEBEB"
+        />
+    <LinearLayout
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginLeft="20dp">
+        android:orientation="vertical">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -64,16 +73,43 @@
             android:textColor="@color/black"
             android:textSize="22sp"
             android:textStyle="bold"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="4dp"
+            android:layout_marginLeft="20dp"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:text="hello"
+            android:layout_marginLeft="20dp"
+            android:layout_marginBottom="4dp"
             android:id="@+id/detailviewitem_createAt" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#EBEBEB"
+            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="6dp"
+            >
         <TextView
+            android:text="hello"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold"
             android:id="@+id/detailviewitem_content"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent"
+            />
+        </LinearLayout>
     </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#EBEBEB"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="60dp"

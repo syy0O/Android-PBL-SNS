@@ -15,14 +15,29 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.kuj.androidpblsns.HomeActivity
 import com.kuj.androidpblsns.chat.ChatRoomFragment
 import com.kuj.androidpblsns.databinding.FragmentProductDetailBinding
+
 import com.kuj.androidpblsns.push.FcmPush
+
+//<<<<<<< HEAD
+import kotlinx.android.synthetic.main.fragment_my_page.*
+import kotlinx.android.synthetic.main.fragment_product_detail.*
+//=======
+//import com.kuj.androidpblsns.databinding.FragmentProductDeatilReBinding
+//>>>>>>> Stashed changes
+//=======
+//>>>>>>> 3bd1d545e85c6a3841757d49ad81a87b547ab9c9
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,6 +46,7 @@ private const val POSITION = "position"
 
 class ProductDetailFragment : Fragment() {
 
+    private lateinit var database:DatabaseReference
     private lateinit var binding: FragmentProductDetailBinding
 
     /** [ArticleViewModel]가 Activity 에서 생성되었기에 데이터가 남아있음 */
@@ -38,8 +54,9 @@ class ProductDetailFragment : Fragment() {
     private val firebaseAuth:FirebaseAuth by lazy{Firebase.auth}
     private val userRef =  Firebase.database.getReference("user")
 
-    val database =  FirebaseDatabase.getInstance().reference
-    val nameRef = database.child("user")
+    val namrRefdatabase =  FirebaseDatabase.getInstance().reference
+    val nameRef = namrRefdatabase.child("user")
+
 
     private var position: Int = 0
 
@@ -68,6 +85,7 @@ class ProductDetailFragment : Fragment() {
         val format = SimpleDateFormat("MM월 DD일")
         val date = Date(data.createAt)
 
+        database = Firebase.database.reference
         queryItem(data.sellerId)
         isRecentFollowing(firebaseAuth.currentUser?.uid!!,data.sellerId,false)
 
@@ -77,6 +95,13 @@ class ProductDetailFragment : Fragment() {
             detailviewitemTitle.text = data.title
             detailviewitemCreateAt.text = format.format(date).toString()
             detailviewitemContent.text = data.content
+        }
+        val uid = firebaseAuth?.currentUser!!.uid
+        if(data.sellerId == uid){
+            binding.chatBtn.isEnabled=false
+            binding.chatBtn.isClickable=false
+            binding.followBtn.isEnabled=false
+            binding.followBtn.isClickable=false
         }
 
         if (data.imageUrl.isNotEmpty()) {

@@ -20,6 +20,7 @@ import com.kuj.androidpblsns.alarm.AlarmData
 import com.kuj.androidpblsns.alarm.AlarmListActivity
 import com.kuj.androidpblsns.databinding.FragmentHomeBinding
 import com.kuj.androidpblsns.product.AddProductActivity
+import com.kuj.androidpblsns.search.SearchListActivity
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -54,6 +55,10 @@ class HomeFragment : Fragment() {
 
         binding.alarmbtn.setOnClickListener {
             val intent = Intent(requireContext(), AlarmListActivity::class.java);
+            startActivity(intent)
+        }
+        binding.searchbtn.setOnClickListener {
+            val intent = Intent(requireContext(), SearchListActivity::class.java);
             startActivity(intent)
         }
 
