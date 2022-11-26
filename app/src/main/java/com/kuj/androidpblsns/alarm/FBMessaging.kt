@@ -15,6 +15,8 @@ import com.kuj.androidpblsns.login.MainActivity
 
 class FBMessaging : FirebaseMessagingService() {
 
+    
+
     //디바이스마다 FCM(Firebase Cloud Messaging) 토큰이 할당됨, 고유한 값으로 특정 디바이스에만 메시지를 보낼 때 사용함
     //이 토큰이 변경될 때 호출되는 메소드임
     //앱이 재설치 되거나 할 때 변경됨

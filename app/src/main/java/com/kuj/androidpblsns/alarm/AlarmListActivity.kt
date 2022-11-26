@@ -2,37 +2,37 @@ package com.kuj.androidpblsns.alarm
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.FirebaseDatabase
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.kuj.androidpblsns.databinding.ActivityAlarmlistBinding
-import com.kuj.androidpblsns.my_page.AlarmListAdapter
+
 
 class AlarmListActivity : AppCompatActivity() {
-    private val binding by lazy { ActivityAlarmlistBinding.inflate(layoutInflater) }
-    private var firebaseAuth : FirebaseAuth? = null
-    val database =  FirebaseDatabase.getInstance().reference
-    val mypageRef = database.child("user")
 
-    lateinit var alarmListAdapter: AlarmListAdapter
-    val datas = mutableListOf<AlarmData>()
+    private val binding by lazy { ActivityAlarmlistBinding.inflate(layoutInflater) }
+    private lateinit var adapter: AlarmListAdapter
+    private val viewModel by lazy { ViewModelProvider(this).get(AlarmViewModel::class.java) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
-        initRecycler()
-    }
-    private fun initRecycler(){
-        alarmListAdapter = AlarmListAdapter(this)
-        binding.recycleralarmlist.adapter = alarmListAdapter
+        adapter = AlarmListAdapter(this)
 
-        datas.apply{
-            add(AlarmData(alarm = "dd 님이 팔로우하셨습니다"))
-
-        }
-        alarmListAdapter.datas = datas
-        alarmListAdapter.notifyDataSetChanged()
+        val recyclerView : RecyclerView = binding.recycleralarmlist
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = adapter
+        observerData()
 
     }
 
+    fun observerData(){
+        viewModel.fetchData().observe(this, Observer {
+            adapter.setListData(it)
+            adapter.notifyDataSetChanged()
+        })
+    }
 }
+

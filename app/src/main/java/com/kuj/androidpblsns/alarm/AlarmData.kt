@@ -1,5 +1,5 @@
 package com.kuj.androidpblsns.alarm
 
 data class AlarmData (
-    val alarm : String = "",
+    var userName : String = "" // 알림에 뜰 팔로워 닉네임
     )
