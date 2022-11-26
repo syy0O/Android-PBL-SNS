@@ -1,5 +1,10 @@
 package com.kuj.androidpblsns.home
 
+//<<<<<<< Updated upstream
+//=======
+//import com.kuj.androidpblsns.databinding.FragmentProductDeatilReBinding
+//>>>>>>> Stashed changes
+
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -17,19 +22,17 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.kuj.androidpblsns.HomeActivity
 import com.kuj.androidpblsns.chat.ChatRoomFragment
-//<<<<<<< Updated upstream
 import com.kuj.androidpblsns.databinding.FragmentProductDetailBinding
-//=======
-//import com.kuj.androidpblsns.databinding.FragmentProductDeatilReBinding
-//>>>>>>> Stashed changes
 import java.text.SimpleDateFormat
 import java.util.*
+
 
 private const val POSITION = "position"
 
 class ProductDetailFragment : Fragment() {
 
     private lateinit var binding: FragmentProductDetailBinding
+
     /** [ArticleViewModel]가 Activity 에서 생성되었기에 데이터가 남아있음 */
     private val viewModel by activityViewModels<ArticleViewModel>()
     private val firebaseAuth:FirebaseAuth by lazy{Firebase.auth}
@@ -117,13 +120,26 @@ class ProductDetailFragment : Fragment() {
                     else {
                         if(following.containsKey(followingId)){
                             var currentValue = following.getValue(followingId)
+                            var removeFollower = userRef.child(followingId).child("follower").child(userId)
+                            // 다른사람 uid = followingId
+                            // 팔로워는 내가 팔로우 한 사람의 UID 자식노드 follower에 저장되며
+                            // 알람리스트 및 푸시알람을 위해 사용
+                            // 언팔하게되면 상대방 follower노드에 내 UID가 Remove 된다.
+
                             if (currentValue == true){
                                 userRef.child(userId).child("following").child(followingId).setValue(false)
                                 binding.followBtn.text = "팔로우"
+
+                                //언팔했을경우 팔로워에서 내 UID... 삭제하고싶음..
+                                //removeFollower.removeValue()
+                                Log.v("##123##", removeFollower.toString())
                             }
                             else {
                                 userRef.child(userId).child("following").child(followingId).setValue(true)
                                 binding.followBtn.text = "팔로우중"
+                                Log.v("####", followingId)
+                                //팔로우 했으면 상대방 follower에 내 UID 저장
+                                userRef.child(followingId).child("follower").setValue(userId)
                             }
                         }
                         else {

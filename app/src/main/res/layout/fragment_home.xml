@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_marginBottom="16dp"
-    tools:context=".HomeFragment">
+    tools:context=".home.HomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <LinearLayout
@@ -28,8 +28,9 @@
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginRight="200dp"
+            android:layout_marginRight="180dp"
             android:src="@drawable/ic_baseline_expand_more_24" />
+
         <Button
             android:id="@+id/searchbtn"
             android:layout_width="43dp"
@@ -38,6 +39,7 @@
             app:icon="@drawable/ic_baseline_search_24"
             app:iconTint="#000000"
             tools:ignore="SpeakableTextPresentCheck" />
+
         <Button
             android:id="@+id/alarmbtn"
             android:layout_width="30dp"

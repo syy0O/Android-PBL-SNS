@@ -1,4 +1,4 @@
-package com.kuj.androidpblsns
+package com.kuj.androidpblsns.home
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,12 +12,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.kuj.androidpblsns.R
+import com.kuj.androidpblsns.alarm.AlarmData
 import com.kuj.androidpblsns.alarm.AlarmListActivity
 import com.kuj.androidpblsns.databinding.FragmentHomeBinding
-import com.kuj.androidpblsns.home.ArticleAdapter
-import com.kuj.androidpblsns.home.ArticleViewModel
-import com.kuj.androidpblsns.home.ArticleModel
 import com.kuj.androidpblsns.product.AddProductActivity
 
 
