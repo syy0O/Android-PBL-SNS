@@ -12,10 +12,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.database.DataSnapshot
@@ -24,6 +22,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.kuj.androidpblsns.ArticleViewModel
 import com.kuj.androidpblsns.HomeActivity
 import com.kuj.androidpblsns.chat.ChatRoomFragment
 import com.kuj.androidpblsns.databinding.FragmentProductDetailBinding
@@ -31,8 +30,6 @@ import com.kuj.androidpblsns.databinding.FragmentProductDetailBinding
 import com.kuj.androidpblsns.push.FcmPush
 
 //<<<<<<< HEAD
-import kotlinx.android.synthetic.main.fragment_my_page.*
-import kotlinx.android.synthetic.main.fragment_product_detail.*
 //=======
 //import com.kuj.androidpblsns.databinding.FragmentProductDeatilReBinding
 //>>>>>>> Stashed changes

@@ -12,15 +12,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.kuj.androidpblsns.ArticleViewModel
+import com.kuj.androidpblsns.HomeActivity
 import com.kuj.androidpblsns.R
-import com.kuj.androidpblsns.alarm.AlarmData
 import com.kuj.androidpblsns.alarm.AlarmListActivity
 import com.kuj.androidpblsns.databinding.FragmentHomeBinding
 import com.kuj.androidpblsns.product.AddProductActivity
-import com.kuj.androidpblsns.search.SearchListActivity
+import com.kuj.androidpblsns.search.SearchListFragment
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -41,6 +40,9 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+        viewModel.initHomeFragmentData()
+
         return binding.root
     }
 
@@ -50,7 +52,9 @@ class HomeFragment : Fragment() {
         articleAdapter = ArticleAdapter(requireContext())
 
         viewModel.articleLiveData.observe(viewLifecycleOwner) {
-            articleAdapter.submitList(it)
+            if (it.isNotEmpty()) {
+                articleAdapter.submitList(it)
+            }
         }
 
         binding.alarmbtn.setOnClickListener {
@@ -58,8 +62,7 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
         binding.searchbtn.setOnClickListener {
-            val intent = Intent(requireContext(), SearchListActivity::class.java);
-            startActivity(intent)
+            (activity as HomeActivity).changeFragment(SearchListFragment())
         }
 
         binding.floatingActionButton.setOnClickListener {

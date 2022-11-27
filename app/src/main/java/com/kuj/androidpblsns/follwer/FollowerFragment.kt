@@ -6,17 +6,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kuj.androidpblsns.R
 import com.kuj.androidpblsns.alarm.AlarmListActivity
 import com.kuj.androidpblsns.databinding.FragmentFollowerBinding
 import com.kuj.androidpblsns.home.ArticleAdapter
-import com.kuj.androidpblsns.home.ArticleViewModel
 import com.kuj.androidpblsns.home.FollowerArticleViewModel
-import com.kuj.androidpblsns.product.AddProductActivity
 
 class FollowerFragment : Fragment() {
 
