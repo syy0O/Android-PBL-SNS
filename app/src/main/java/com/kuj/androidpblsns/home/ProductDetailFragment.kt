@@ -82,7 +82,7 @@ class ProductDetailFragment : Fragment() {
 
         Log.d("ProductDetailFragment", position.toString())
 
-        val format = SimpleDateFormat("MM월 DD일")
+        val format = SimpleDateFormat("MM월 dd일")
         val date = Date(data.createAt)
 
         database = Firebase.database.reference
