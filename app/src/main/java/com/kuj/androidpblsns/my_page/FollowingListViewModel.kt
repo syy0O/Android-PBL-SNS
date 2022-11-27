@@ -1,6 +1,7 @@
 package com.kuj.androidpblsns.my_page
 
 
+import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -11,9 +12,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import com.kuj.androidpblsns.chat.ChatData
 import com.kuj.androidpblsns.data.Message
+import com.kuj.androidpblsns.home.ArticleModel
+import com.kuj.androidpblsns.login.UserData
 import java.util.HashMap
 
 class FollowingListViewModel : ViewModel(){
@@ -25,7 +29,6 @@ class FollowingListViewModel : ViewModel(){
     //접속자 Uid
     private val userUid = auth.currentUser?.uid
 
-
     // following list
     private val followingList = mutableListOf<FollowerData>()
     private val _followingListLiveData = MutableLiveData<List<FollowerData>>()
@@ -34,6 +37,9 @@ class FollowingListViewModel : ViewModel(){
     val setFollowingListFromDBSuccess = MutableLiveData(false)
     val removeFollowing = MutableLiveData(false)
 
+    init {
+        getFollowingListFromDB()
+    }
 
     // DB 객체 이용해 메시지 가져오기
     fun getFollowingListFromDB() {
@@ -47,8 +53,6 @@ class FollowingListViewModel : ViewModel(){
                     for (following in followingUids){
                         addFollowingList(following)
                     }
-                    _followingListLiveData.value = followingList
-                    setFollowingListFromDBSuccess.value = true
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -61,11 +65,15 @@ class FollowingListViewModel : ViewModel(){
         userRef.child(uid).addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 //데이터 가져오는 기능 구현
-                val map = snapshot.value as Map<*, *>
-                var nickname = map["nickname"].toString()
-                var email = map["email"].toString()
-                val followingInfo = FollowerData(nickname,email)
+                val map = snapshot.getValue(UserData::class.java)
+                var nickname = map?.nickname.toString()
+                var email = map?.email.toString()
+                Log.d("팔로워 리스트 확인 nickname:",nickname)
+                Log.d("팔로워 리스트 확인 email:",email)
+                val followingInfo = FollowerData(nickname,email,uid)
                 followingList.add(followingInfo)
+                _followingListLiveData.value = followingList
+                setFollowingListFromDBSuccess.value = true
             }
 
             override fun onCancelled(error: DatabaseError) {

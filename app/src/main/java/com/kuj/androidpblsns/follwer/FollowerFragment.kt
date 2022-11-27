@@ -22,7 +22,7 @@ class FollowerFragment : Fragment() {
 
     private lateinit var binding: FragmentFollowerBinding
     private lateinit var articleAdapter: ArticleAdapter
-    private val viewModel by activityViewModels<FollowerArticleViewModel>()
+    private val viewModel by viewModels<FollowerArticleViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,5 +51,6 @@ class FollowerFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = articleAdapter
         }
+
     }
 }
