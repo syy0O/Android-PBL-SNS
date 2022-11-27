@@ -48,6 +48,7 @@ class FollowerListAdapter(private val viewModel: FollowingListViewModel,private 
         fun bind(followerData: FollowerData){
             binding.followerEmail.text = followerData.email
             binding.followerNickname.text = followerData.nickname
+            binding.followListBtn.text = "팔로우 취소"
             binding.followListBtn.setOnClickListener{
                 if(binding.followListBtn.text == "팔로우 취소") { // DB에서 팔로우 상태이고 버튼을 눌렀을 때,
                     binding.followListBtn.text = "팔로우" // Text Change,

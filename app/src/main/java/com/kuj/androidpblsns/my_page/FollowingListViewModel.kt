@@ -47,11 +47,20 @@ class FollowingListViewModel : ViewModel(){
             .addValueEventListener(object:ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     //데이터 가져오는 기능 구현
+                    Log.d("팔로우 리스트 변경시 불림","팔로우 리스트 변경됨")
                     followingList.clear()
                     val following = snapshot.value as HashMap<String, Boolean>
                     val followingUids = following.filterValues { it == true }.keys
-                    for (following in followingUids){
-                        addFollowingList(following)
+                    if (followingUids.size != 0) {
+                        Log.d("팔로우 리스트 변경시 불림","사이즈가 0이 아님")
+                        for (following in followingUids) {
+                            addFollowingList(following)
+                        }
+                    }
+                    else {
+                        Log.d("팔로우 리스트 변경시 불림","사이즈가 0")
+                        _followingListLiveData.value = followingList
+                        setFollowingListFromDBSuccess.value = true
                     }
                 }
 
@@ -68,8 +77,6 @@ class FollowingListViewModel : ViewModel(){
                 val map = snapshot.getValue(UserData::class.java)
                 var nickname = map?.nickname.toString()
                 var email = map?.email.toString()
-                Log.d("팔로워 리스트 확인 nickname:",nickname)
-                Log.d("팔로워 리스트 확인 email:",email)
                 val followingInfo = FollowerData(nickname,email,uid)
                 followingList.add(followingInfo)
                 _followingListLiveData.value = followingList
