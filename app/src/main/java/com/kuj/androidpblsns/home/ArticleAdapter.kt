@@ -29,7 +29,7 @@ class ArticleAdapter(private val context: Context) :
 
             binding.titleTextView.text = articleModel.title
             binding.dateTextView.text = format.format(date).toString()
-            binding.priceTextView.text = articleModel.price
+            binding.priceTextView.text = articleModel.price+"원"
             if (articleModel.imageUrl.isNotEmpty()) {
                 Glide.with(binding.thumbnailImageView)
                     .load(articleModel.imageUrl)
