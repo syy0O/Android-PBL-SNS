@@ -55,7 +55,7 @@ class ChatRoomFragment : Fragment() {
 
         // 채팅방 나가기 버튼
         binding.backButton.setOnClickListener{
-            (activity as HomeActivity).removeFragment(this@ChatRoomFragment)
+            (activity as HomeActivity).changeFragment(this@ChatRoomFragment)
         }
 
         // DB 객체 이용해 메시지 가져오기
@@ -81,6 +81,7 @@ class ChatRoomFragment : Fragment() {
             }
         }
 
+        viewModel.queryItem()
         // 대화상대이름 설정
         viewModel.chatReceiverTextLiveData.observe(viewLifecycleOwner) {
             binding.chatReceiverText.text = it

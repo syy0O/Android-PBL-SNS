@@ -13,22 +13,23 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.kuj.androidpblsns.data.Message
 
-class ChatRoomViewModel : ViewModel(){
+class ChatRoomViewModel : ViewModel() {
 
 
     private val database = Firebase.database
-    private val userRef =  Firebase.database.getReference("user")
+    private val userRef = Firebase.database.getReference("user")
     private val chatRef = database.getReference("chats")
-    private val auth: FirebaseAuth by lazy{ Firebase.auth}
+    private val auth: FirebaseAuth by lazy { Firebase.auth }
 
 
     private lateinit var receiverUid: String
+
     //접속자 Uid
     private val senderUid = auth.currentUser?.uid
 
     // chatting room setting
     private lateinit var receiverRoom: String // 받는 대화방
-    private lateinit var senderRoom:String // 보낸 대화방
+    private lateinit var senderRoom: String // 보낸 대화방
 
     // message
     private var messageList = ArrayList<Message>() //메시지 리스트
@@ -43,6 +44,7 @@ class ChatRoomViewModel : ViewModel(){
 
     fun setReceiverUid(receiverUid: String) {
         this.receiverUid = receiverUid
+        Log.d("song2", "receiverUid: $receiverUid")
 
         //보낸이 방
         senderRoom = receiverUid + senderUid
@@ -66,11 +68,11 @@ class ChatRoomViewModel : ViewModel(){
     // DB 객체 이용해 메시지 가져오기
     fun getMessageFromDB() {
         chatRef.child(senderRoom).child("messages")
-            .addValueEventListener(object:ValueEventListener{
+            .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     //데이터 가져오는 기능 구현
                     messageList.clear()
-                    for(postSnapShat in snapshot.children){
+                    for (postSnapShat in snapshot.children) {
                         val message = postSnapShat.getValue(Message::class.java)
                         messageList.add(message!!)
                     }
@@ -86,17 +88,13 @@ class ChatRoomViewModel : ViewModel(){
     }
 
     fun queryItem() {
-        userRef.child(receiverUid).addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val map = dataSnapshot.value as Map<*, *>
-                _chatReceiverTextLiveData.value = map["nickname"].toString()
+        userRef.child(receiverUid).get().addOnSuccessListener {
+            val map = it.value as Map<*, *>
+            Log.d("song2 queryItem", "${it.value}")
+            _chatReceiverTextLiveData.value = map["nickname"].toString()
 
-                Log.d("아니 했는데..",_chatReceiverTextLiveData.value+"")
+            Log.d("아니 했는데..", _chatReceiverTextLiveData.value + "")
 
-            }
-            override fun onCancelled(error: DatabaseError) {
-                // Failed to read value
-            }
-        })
+        }
     }
 }
