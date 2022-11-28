@@ -9,12 +9,12 @@
     <item
         android:id="@+id/follower"
         android:icon="@drawable/ic_baseline_star_24"
-        android:title="팔로워" />
+        android:title="팔로우" />
 
     <item
-        android:id="@+id/chatList"
-        android:icon="@drawable/ic_baseline_chat_24"
-        android:title="채팅" />
+        android:id="@+id/searchList"
+        android:icon="@drawable/ic_baseline_search_24"
+        android:title="검색" />
 
 
     <item
