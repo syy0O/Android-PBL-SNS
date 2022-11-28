@@ -56,12 +56,12 @@ class ArticleViewModel : ViewModel() {
                 updateFollowArticle()
                 updateMyArticle()
             }
-
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onChildRemoved(snapshot: DataSnapshot) {}
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {}
             override fun onCancelled(error: DatabaseError) {}
         }
+
         myArticle.addChildEventListener(listener)
 
         userRef.child(firebaseAuth.currentUser?.uid!!).child("following").get()
@@ -139,8 +139,9 @@ class ArticleViewModel : ViewModel() {
     }
 
     fun updateMyArticle() {
+        Log.d("yousong","몇번")
         for (articleModel in articleDataList) {
-            if (articleModel.sellerId == firebaseAuth.currentUser?.uid) {
+            if (articleModel.sellerId == firebaseAuth.currentUser?.uid && !myArticleDataList.contains(articleModel)) {
                 addMyArticleModel(articleModel)
             } else {
                 //deleteArticleModel(model)
@@ -158,6 +159,7 @@ class ArticleViewModel : ViewModel() {
 
     fun initMyArticleData() {
         _articleLiveData.value = myArticleDataList
+        Log.d("eunseo","여기가 불려요오오오옹오ㅓ ")
     }
 
     fun addArticleModel(model: ArticleModel) {
