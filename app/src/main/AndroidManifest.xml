@@ -44,8 +44,8 @@
         <activity android:name=".product.AddProductActivity"/>
         <activity android:name=".search.SearchListActivity"/>
         <activity android:name=".my_page.FollowListFragment"/>
-        <activity android:name=".my_page.ProfileEditActivity"/>
-        <activity android:name=".my_page.MyProductActivity"/>
+        <activity android:name=".my_page.ProfileEditFragment"/>
+        <activity android:name=".my_page.MyProductFragment"/>
         <activity android:name=".alarm.AlarmListActivity"/>
 
     </application>

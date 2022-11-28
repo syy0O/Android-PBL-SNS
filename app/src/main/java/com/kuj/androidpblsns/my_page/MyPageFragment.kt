@@ -13,6 +13,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import com.kuj.androidpblsns.HomeActivity
 import com.kuj.androidpblsns.databinding.FragmentMyPageBinding
 import com.kuj.androidpblsns.login.MainActivity
 
@@ -68,27 +69,18 @@ class MyPageFragment : Fragment() {
         })
 
         // 유저 프로필 수정버튼
-        binding.profileEditBtn.setOnClickListener {
-            val intent = Intent(context, ProfileEditActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            }
-            startActivity(intent)
+        binding.myPageUserArea.setOnClickListener {
+            (activity as HomeActivity).changeFragment(ProfileEditFragment())
         }
 
         // 팔로우 목록 보기
         binding.followCheckBtn.setOnClickListener {
-            val intent = Intent(context, FollowListFragment::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            }
-            startActivity(intent)
+            (activity as HomeActivity).changeFragment(FollowListFragment())
         }
 
         // 내가 쓴 글 모아보기
         binding.myProductBtn.setOnClickListener {
-            val intent = Intent(context, MyProductActivity::class.java).apply{
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            }
-            startActivity(intent)
+            (activity as HomeActivity).changeFragment(MyProductFragment())
         }
 
         // 로그아웃 후 로그인 화면으로
