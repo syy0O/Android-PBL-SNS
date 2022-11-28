@@ -57,10 +57,6 @@ class HomeFragment : Fragment() {
             }
         }
 
-        binding.alarmbtn.setOnClickListener {
-            val intent = Intent(requireContext(), AlarmListActivity::class.java);
-            startActivity(intent)
-        }
         binding.searchbtn.setOnClickListener {
             (activity as HomeActivity).changeFragment(SearchListFragment())
         }
