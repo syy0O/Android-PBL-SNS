@@ -21,6 +21,7 @@ import com.kuj.androidpblsns.follwer.FollowerFragment
 
 import com.kuj.androidpblsns.my_page.MyPageFragment
 import com.kuj.androidpblsns.home.HomeFragment
+import com.kuj.androidpblsns.search.SearchListFragment
 
 
 // 홈 액티비티
@@ -78,7 +79,7 @@ class HomeActivity : AppCompatActivity() {
                 when (item.itemId) {
                     R.id.home -> HomeFragment()
                     R.id.follower -> FollowerFragment()
-                    R.id.chatList -> ChatFragment()
+                    R.id.searchList -> SearchListFragment()
                     else -> MyPageFragment()
                 }
             )
