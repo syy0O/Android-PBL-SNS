@@ -20,16 +20,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:text="삼선동 2가"
+            android:text="상상마켓"
+            android:layout_weight="1"
             android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="@color/black"/>
-
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="180dp"
-            android:src="@drawable/ic_baseline_expand_more_24" />
 
         <Button
             android:id="@+id/searchbtn"
@@ -37,16 +32,6 @@
             android:layout_height="wrap_content"
             android:background="#00ff0000"
             app:icon="@drawable/ic_baseline_search_24"
-            app:iconTint="#000000"
-            tools:ignore="SpeakableTextPresentCheck" />
-
-        <Button
-            android:id="@+id/alarmbtn"
-            android:layout_width="30dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="#00ff0000"
-            app:icon="@drawable/ic_baseline_notifications_none_24"
             app:iconTint="#000000"
             tools:ignore="SpeakableTextPresentCheck" />
 

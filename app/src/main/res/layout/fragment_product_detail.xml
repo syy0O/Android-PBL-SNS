@@ -97,7 +97,7 @@
         <TextView
             android:text="hello"
             android:textColor="@color/black"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold"
             android:id="@+id/detailviewitem_content"
             android:layout_width="match_parent"
@@ -116,16 +116,10 @@
         android:layout_gravity="bottom"
         android:gravity="center_vertical"
         >
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:id="@+id/detailviewitem_like"
-            android:src="@drawable/ic_baseline_favorite_border_24"
-            android:layout_marginLeft="13dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="13dp"
+            android:layout_marginLeft="16dp"
             android:textStyle="bold"
             android:textSize="23dp"
             android:text="10000"
