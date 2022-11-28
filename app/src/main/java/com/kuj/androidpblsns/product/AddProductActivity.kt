@@ -65,7 +65,7 @@ class AddProductActivity : AppCompatActivity() {
         }
 
         binding.cancleButton.setOnClickListener{
-            val intent = Intent(this, HomeActivity::class.java);
+            val intent = Intent(this, HomeActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             //overridePendingTransition(R.anim.none,R.anim.slide_up_exit)
@@ -134,33 +134,39 @@ class AddProductActivity : AppCompatActivity() {
 
         Log.d("contentUpload func 들어옴: ", " ")
         //Make filename
-        var timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        var imageFileName = "IMAGE_"+timestamp+"_.png"
+        val timestamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val imageFileName = "IMAGE_"+timestamp+"_.png"
 
-        var storageRef = storage.reference.child("images").child(imageFileName)
-        Log.d("firebase storage ref: ", " "+storageRef)
-        Log.d("firebase photoUri: ", " "+photoUri!!)
+        val storageRef = storage.reference.child("images").child(imageFileName)
+        Log.d("firebase storage ref: ", " " + storageRef)
 
-        //FileUpload
-        storageRef.putFile(photoUri!!).addOnSuccessListener {
-            storageRef.downloadUrl.addOnSuccessListener { url ->
-                // article 생성
-                var article = ArticleModel()
-                article.imageUrl = url.toString() //Insert DownloadUrl of image
-                article.sellerId = auth.currentUser?.uid?: "annonymous"
-                article.title = binding.titleEditText.text.toString()
-                article.content = binding.contentEditText.text.toString()
-                article.price = binding.priceEditText.text.toString()
-                article.createAt = System.currentTimeMillis()
-                // database에 article push
-                val articleRef = articleRef.push()
-                articleRef.setValue(article)
-                Toast.makeText(
-                    this, "게시글 업로드 완료",
-                    Toast.LENGTH_SHORT
-                ).show()
-                finish()
+        if (photoUri != null) {
+            Log.d("firebase photoUri: ", " " + photoUri)
+
+            //FileUpload
+            storageRef.putFile(photoUri!!).addOnSuccessListener {
+                storageRef.downloadUrl.addOnSuccessListener { url ->
+                    // article 생성
+                    val article = ArticleModel()
+                    article.imageUrl = url.toString() //Insert DownloadUrl of image
+                    article.sellerId = auth.currentUser?.uid?: "annonymous"
+                    article.title = binding.titleEditText.text.toString()
+                    article.content = binding.contentEditText.text.toString()
+                    article.price = binding.priceEditText.text.toString()
+                    article.createAt = System.currentTimeMillis()
+                    // database에 article push
+                    val articleRef = articleRef.push()
+                    articleRef.setValue(article)
+                    Toast.makeText(
+                        this, "게시글 업로드 완료",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    finish()
+                }
             }
+        } else {
+            Toast.makeText(this, "사진은 필수입니다", Toast.LENGTH_SHORT).show()
         }
+
     }
 }

@@ -6,7 +6,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
@@ -14,8 +13,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
-import com.kuj.androidpblsns.R
-import com.kuj.androidpblsns.alarm.AlarmDTO
 import com.kuj.androidpblsns.databinding.FragmentMyPageBinding
 import com.kuj.androidpblsns.login.MainActivity
 
@@ -80,7 +77,7 @@ class MyPageFragment : Fragment() {
 
         // 팔로우 목록 보기
         binding.followCheckBtn.setOnClickListener {
-            val intent = Intent(context, FollowListActivity::class.java).apply {
+            val intent = Intent(context, FollowListFragment::class.java).apply {
                 addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             }
             startActivity(intent)

@@ -4,14 +4,14 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".my_page.FollowListActivity"
+    tools:context=".my_page.FollowListFragment"
     android:orientation="vertical">
 
     <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
-            android:gravity="center_vertical"
-            android:id="@+id/toolbarLayout">
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:gravity="center_vertical"
+        android:id="@+id/toolbarLayout">
 
         <TextView
             android:layout_width="match_parent"
