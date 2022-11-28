@@ -140,7 +140,9 @@ class AddProductActivity : AppCompatActivity() {
         val storageRef = storage.reference.child("images").child(imageFileName)
         Log.d("firebase storage ref: ", " " + storageRef)
 
-        if (photoUri != null) {
+        if (binding.titleEditText.text.toString() == "" || binding.contentEditText.text.toString() == "" ||binding.priceEditText.text.toString() == "")
+            Toast.makeText(this, "모든 입력창에 정보를 입력해주세요!", Toast.LENGTH_SHORT).show()
+        else if (photoUri != null) {
             Log.d("firebase photoUri: ", " " + photoUri)
 
             //FileUpload
