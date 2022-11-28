@@ -1,10 +1,5 @@
 package com.kuj.androidpblsns.home
 
-//<<<<<<< Updated upstream
-//=======
-//import com.kuj.androidpblsns.databinding.FragmentProductDeatilReBinding
-//>>>>>>> Stashed changes
-
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -43,15 +38,15 @@ private const val POSITION = "position"
 
 class ProductDetailFragment : Fragment() {
 
-    private lateinit var database:DatabaseReference
+    private lateinit var database: DatabaseReference
     private lateinit var binding: FragmentProductDetailBinding
 
     /** [ArticleViewModel]가 Activity 에서 생성되었기에 데이터가 남아있음 */
     private val viewModel by activityViewModels<ArticleViewModel>()//activityViewModels<ArticleViewModel>(), activityViewModels<FollowerArticleViewModel>()
-    private val firebaseAuth:FirebaseAuth by lazy{Firebase.auth}
-    private val userRef =  Firebase.database.getReference("user")
+    private val firebaseAuth: FirebaseAuth by lazy { Firebase.auth }
+    private val userRef = Firebase.database.getReference("user")
 
-    val namrRefdatabase =  FirebaseDatabase.getInstance().reference
+    val namrRefdatabase = FirebaseDatabase.getInstance().reference
     val nameRef = namrRefdatabase.child("user")
 
 
@@ -74,31 +69,32 @@ class ProductDetailFragment : Fragment() {
     }
 
     private fun initView() {
-        val position = arguments?.getInt(POSITION)
-        val data = viewModel.articleLiveData.value!![position!!]
+        val data = viewModel.articleLiveData.value!![position]
 
         Log.d("ProductDetailFragment", position.toString())
 
-        val format = SimpleDateFormat("MM월 dd일")
+        val format = SimpleDateFormat("MM월 DD일")
         val date = Date(data.createAt)
 
         database = Firebase.database.reference
-        queryItem(data.sellerId)
-        isRecentFollowing(firebaseAuth.currentUser?.uid!!,data.sellerId,false)
-
+        getSellerNickname(data.sellerId)
 
         binding.apply {
             deatilviewitemPrice.text = data.price
             detailviewitemTitle.text = data.title
             detailviewitemCreateAt.text = format.format(date).toString()
             detailviewitemContent.text = data.content
+            binding.followBtn.text =
+                if (!viewModel.followingUidLiveData.value!!.contains(data.sellerId)) "Follow" else "Unfollow"
         }
-        val uid = firebaseAuth?.currentUser!!.uid
-        if(data.sellerId == uid){
-            binding.chatBtn.isEnabled=false
-            binding.chatBtn.isClickable=false
-            binding.followBtn.isEnabled=false
-            binding.followBtn.isClickable=false
+
+        val uid = firebaseAuth.currentUser!!.uid
+
+        if (data.sellerId == uid) {
+            binding.chatBtn.isEnabled = false
+            binding.chatBtn.isClickable = false
+            binding.followBtn.isEnabled = false
+            binding.followBtn.isClickable = false
         }
 
         if (data.imageUrl.isNotEmpty()) {
@@ -107,95 +103,99 @@ class ProductDetailFragment : Fragment() {
                 .into(binding.detailviewitemImage)
         }
 
-        binding.chatBtn.setOnClickListener{
-            (activity as HomeActivity).changeFragmentWithBackStack(ChatRoomFragment.newInstance(data.sellerId)) // 테스트 용 sellerId 박아놓은 것
+        binding.chatBtn.setOnClickListener {
+            (activity as HomeActivity).changeFragment(ChatRoomFragment.newInstance(data.sellerId)) // 테스트 용 sellerId 박아놓은 것
         }
 
-        binding.followBtn.setOnClickListener{
+        binding.followBtn.setOnClickListener {
             //팔로우 눌렀을 때
-            isRecentFollowing(firebaseAuth.currentUser?.uid!!,data.sellerId,true)
+            followingProcess(firebaseAuth.currentUser?.uid!!, data.sellerId)
         }
     }
 
-    private fun isRecentFollowing(userId:String, followingId:String, isBtnClicked:Boolean){
-            userRef.child(userId).child("following").addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
-                }
-                override fun onDataChange(dataSnapshot: DataSnapshot) {
-                    val following = dataSnapshot.value as HashMap<String, Boolean>
+    private fun followingProcess(userId: String, followingId: String) {
 
-                    if (isBtnClicked == false){
+        var myFollowingList: List<String> = emptyList()
+        var followUserList: List<String> = emptyList()
 
-                        if(following.containsKey(followingId)){
-                            var currentValue = following.getValue(followingId)
-                            if (currentValue == true){
-                                binding.followBtn.text = "팔로우중"
-                            }
-                            else {
-                                binding.followBtn.text = "팔로우"
-                            }
-                        }
-                        else {
-                            binding.followBtn.text = "팔로우"
-                        }
-                    }
-                    else {
-                        if(following.containsKey(followingId)){
-                            var currentValue = following.getValue(followingId)
-                            var removeFollower = userRef.child(followingId).child("follower").child(userId)
-                            // 다른사람 uid = followingId
-                            // 팔로워는 내가 팔로우 한 사람의 UID 자식노드 follower에 저장되며
-                            // 알람리스트 및 푸시알람을 위해 사용
-                            // 언팔하게되면 상대방 follower노드에 내 UID가 Remove 된다.
-
-                            if (currentValue == true){
-                                userRef.child(userId).child("following").child(followingId).setValue(false)
-                                binding.followBtn.text = "팔로우"
-
-                                //언팔했을경우 팔로워에서 내 UID... 삭제하고싶음..
-                                //removeFollower.removeValue()
-                                Log.v("##123##", removeFollower.toString())
-                            }
-                            else { // 팔로우했을때
-                                userRef.child(userId).child("following").child(followingId).setValue(true)
-                                binding.followBtn.text = "팔로우중"
-                                Log.v("####", followingId)
-                                //팔로우 했으면 상대방 follower에 내 UID 저장
-                                userRef.child(followingId).child("follower").setValue(userId)
-
-                                //팔로우한사람 nickname DB에서 가져오기
-                                val nickname = nameRef.child(userId).child("nickname")
-                                nickname.addValueEventListener(object : ValueEventListener {
-                                    override fun onDataChange(dataSnapshot: DataSnapshot) {
-                                        val followername = dataSnapshot.getValue(String::class.java)
-                                        // 팔로우 푸시알람 보내기
-                                        FcmPush.instance.sendMessage(followingId, "팔로우 알림", followername + "님이 회원님을 팔로우합니다")
-                                    }
-
-                                    override fun onCancelled(databaseError: DatabaseError) {}
-                                })
-
-
-
-
-                            }
-                        }
-                        else {
-                            userRef.child(userId).child("following").child(followingId)
-                                .setValue(true)
-                            binding.followBtn.text = "팔로우중"
-                        }
-                    }
-                }
-            })
+        userRef.child(userId).child("following").get().addOnSuccessListener {
+            myFollowingList = it.value as List<String>
+            if (followListValidation(myFollowingList, followUserList)) {
+                Log.d("파송송", "followValidation Success ${myFollowingList} ${followUserList}")
+                followProcess(userId, followingId, myFollowingList.toMutableList(), followUserList.toMutableList())
+            }
         }
 
-    private fun queryItem(userID: String) {
+        userRef.child(followingId).child("follower").get().addOnSuccessListener {
+            followUserList = it.value as List<String>
+            if (followListValidation(myFollowingList, followUserList)) {
+                Log.d("파송송", "followValidation Success ${myFollowingList} ${followUserList}")
+                followProcess(userId, followingId, myFollowingList.toMutableList(), followUserList.toMutableList())
+            }
+        }
+    }
+
+    private fun followListValidation(myList: List<String>, followList: List<String>): Boolean {
+        if (myList.isNotEmpty() && followList.isNotEmpty()) {
+            return true
+        }
+        return false
+    }
+
+    private fun followProcess(
+        userId: String,
+        followingId: String,
+        myList: MutableList<String>,
+        followList: MutableList<String>,
+    ) {
+        if (myList.contains(followingId)) {
+            myList.remove(followingId)
+            userRef.child(userId).child("following").setValue(myList)
+            followList.remove(userId)
+            userRef.child(followingId).child("follower").setValue(followList.toList())
+            binding.followBtn.text = "Follow"
+            viewModel.updateFollowData(myList)
+            viewModel.removeSpecificFollower(followingId)
+
+        } else { // 팔로우했을때
+            myList.add(followingId)
+            userRef.child(userId).child("following").setValue(myList.toList())
+            followList.add(userId)
+            userRef.child(followingId).child("follower").setValue(followList.toList())
+            binding.followBtn.text = "UnFollow"
+
+            viewModel.updateFollowData(myList)
+            viewModel.addSpecificFollower(followingId)
+
+            //팔로우한사람 nickname DB에서 가져오기
+            sendNotificationToFollowingUser(userId, followingId)
+        }
+
+        viewModel.updateFollowArticle()
+    }
+
+    private fun sendNotificationToFollowingUser(userId: String, followingId: String) {
+        val nickname = nameRef.child(userId).child("nickname")
+        nickname.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(dataSnapshot: DataSnapshot) {
+                val followerName = dataSnapshot.getValue(String::class.java)
+                // 팔로우 푸시알람 보내기
+                FcmPush.instance.sendMessage(followingId,
+                    "팔로우 알림",
+                    followerName + "님이 회원님을 팔로우합니다")
+            }
+
+            override fun onCancelled(databaseError: DatabaseError) {}
+        })
+    }
+
+    private fun getSellerNickname(userID: String) {
         userRef.child(userID).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
                 val map = dataSnapshot.value as Map<*, *>
                 binding.detailviewitemProfileName.text = map["nickname"].toString()
             }
+
             override fun onCancelled(error: DatabaseError) {
                 // Failed to read value
             }

@@ -24,7 +24,7 @@ class ArticleAdapter(private val context: Context) :
     inner class ViewHolder(private val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(articleModel: ArticleModel) {
-            val format = SimpleDateFormat("MM월 dd일")
+            val format = SimpleDateFormat("MM월 DD일")
             val date = Date(articleModel.createAt)
 
             binding.titleTextView.text = articleModel.title
