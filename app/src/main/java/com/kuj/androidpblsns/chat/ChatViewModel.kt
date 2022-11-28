@@ -5,13 +5,13 @@ import androidx.lifecycle.ViewModel
 
 class ChatViewModel : ViewModel() {
 
-    private val testSellerId = "SJfYEZNOjZN4XJxksbZ390CkdX13"
+    private val testSellerId = "3QPZ7ot3TXdcO97n1xzYVbJPH6H2"
     private val chatRoomList = mutableListOf<ChatData>()
     private val _chatRoomListLiveData = MutableLiveData<List<ChatData>>()
     val chatRoomListLiveData get() = _chatRoomListLiveData
 
     init {
-        /* TODO 실제 DB 데이터 가져온 후 dummy 데이터 지울 것.*/
+        /* TODO 실제 DB 데이터 가져온 후 dummy 데이터 지울 것. */
         initDummyData()
     }
 
