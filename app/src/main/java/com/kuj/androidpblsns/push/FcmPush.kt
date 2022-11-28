@@ -1,12 +1,11 @@
 package com.kuj.androidpblsns.push
 
 import android.util.Log
-import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.gson.Gson
+import com.kuj.androidpblsns.data.PushDTO
 import okhttp3.*
 import java.io.IOException
 
