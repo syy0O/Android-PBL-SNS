@@ -1,4 +1,4 @@
-package com.kuj.androidpblsns.my_page
+package com.kuj.androidpblsns.data
 
 data class FollowerData(
     val nickname: String = "",

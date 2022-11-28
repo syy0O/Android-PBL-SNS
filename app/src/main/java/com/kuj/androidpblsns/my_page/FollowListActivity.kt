@@ -1,13 +1,11 @@
 package com.kuj.androidpblsns.my_page
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.viewModels
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import com.kuj.androidpblsns.chat.ChatViewModel
+import com.kuj.androidpblsns.data.FollowerData
 import com.kuj.androidpblsns.databinding.ActivityFollowlistBinding
 
 class FollowListActivity : AppCompatActivity() {

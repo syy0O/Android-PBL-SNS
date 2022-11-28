@@ -6,24 +6,27 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kuj.androidpblsns.ArticleViewModel
 import com.kuj.androidpblsns.alarm.AlarmListActivity
 import com.kuj.androidpblsns.databinding.FragmentFollowerBinding
 import com.kuj.androidpblsns.home.ArticleAdapter
-import com.kuj.androidpblsns.home.FollowerArticleViewModel
 
 class FollowerFragment : Fragment() {
 
     private lateinit var binding: FragmentFollowerBinding
     private lateinit var articleAdapter: ArticleAdapter
-    private val viewModel by viewModels<FollowerArticleViewModel>()
+    private val viewModel by activityViewModels<ArticleViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentFollowerBinding.inflate(inflater, container, false)
+
+        viewModel.initFollowerFragmentData()
+
         return binding.root
     }
 
@@ -33,12 +36,9 @@ class FollowerFragment : Fragment() {
         articleAdapter = ArticleAdapter(requireContext())
 
         viewModel.articleLiveData.observe(viewLifecycleOwner) {
-            articleAdapter.submitList(it)
-        }
-
-        binding.alarmbtn.setOnClickListener {
-            val intent = Intent(requireContext(), AlarmListActivity::class.java);
-            startActivity(intent)
+            if (it != null) {
+                articleAdapter.submitList(it)
+            }
         }
 
         binding.articleRecyclerView.apply {
@@ -46,6 +46,5 @@ class FollowerFragment : Fragment() {
             layoutManager = LinearLayoutManager(requireContext())
             adapter = articleAdapter
         }
-
     }
 }

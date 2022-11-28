@@ -3,16 +3,13 @@ package com.kuj.androidpblsns.login
 import android.os.Bundle
 import android.text.TextUtils
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import com.kuj.androidpblsns.R
+import com.kuj.androidpblsns.data.UserData
 import com.kuj.androidpblsns.databinding.ActivitySignupBinding
 import kotlinx.android.synthetic.main.activity_signup.*
 

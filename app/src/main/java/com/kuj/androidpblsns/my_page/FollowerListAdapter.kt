@@ -1,26 +1,18 @@
 package com.kuj.androidpblsns.my_page
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.ListAdapter
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.kuj.androidpblsns.alarm.AlarmDTO
+import com.kuj.androidpblsns.data.FollowerData
 import com.kuj.androidpblsns.databinding.FollowlistBinding
-import com.kuj.androidpblsns.push.FcmPush
-import kotlinx.android.synthetic.main.followlist.view.*
-import java.util.HashMap
 
 class FollowerListAdapter(private val viewModel: FollowingListViewModel,private val context: Context):
     RecyclerView.Adapter<FollowerListAdapter.ViewHolder>(){

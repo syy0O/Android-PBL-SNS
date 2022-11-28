@@ -1,4 +1,4 @@
-package com.kuj.androidpblsns.login
+package com.kuj.androidpblsns.data
 
 data class UserData(
     var nickname: String,
