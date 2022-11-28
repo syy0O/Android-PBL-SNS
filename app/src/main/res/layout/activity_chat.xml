@@ -13,19 +13,6 @@
         android:contentInsetStart="8dp"
         android:contentInsetRight="8dp">
 
-        <Button
-            android:id="@+id/back_button"
-            android:layout_width="22dp"
-            android:layout_height="22dp"
-            android:layout_marginLeft="16dp"
-            android:background="@drawable/left_arrow"
-            android:backgroundTint="#CBCCCD"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
-
         <TextView
             android:id="@+id/chat_receiver_text"
             android:layout_width="wrap_content"
