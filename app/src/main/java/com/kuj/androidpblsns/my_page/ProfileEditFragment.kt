@@ -36,6 +36,8 @@ class ProfileEditFragment : Fragment() {
             if (isSuccess == true) {
                 Toast.makeText(requireContext(), "닉네임 변경 완료", Toast.LENGTH_SHORT).show()
                 viewModel.editProfileSuccess.value = null
+                binding.editNickName.setText("")
+
             } else if (isSuccess == false) {
                 Toast.makeText(requireContext(),  "변경에 실패 하였습니다.", Toast.LENGTH_SHORT).show()
                 viewModel.editProfileSuccess.value = null
