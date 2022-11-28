@@ -86,7 +86,7 @@
                 android:adjustViewBounds="true"
                 android:drawableTop="@android:drawable/ic_menu_camera"
                 android:scaleType="fitCenter"
-                android:text="0 / 3" />
+                android:text="사진 선택" />
 
             <ImageView
                 android:id="@+id/addphoto_image"

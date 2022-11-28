@@ -80,8 +80,6 @@ class SignUpActivity : AppCompatActivity(){
     }
 
     private fun addUserToDB(nickname : String, email:String, uid : String){
-        var hashMap = HashMap<String,Boolean>()
-        hashMap.put("default",false)
-        dbRef.child("user").child(uid).setValue(UserData(nickname,email,uid,hashMap,0))
+        dbRef.child("user").child(uid).setValue(UserData(nickname = nickname, email = email, uid = uid))
     }
 }
